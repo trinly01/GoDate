@@ -39,26 +39,17 @@ const onInput = (event: Event): void => {
   const cleanedValue = input.value.replace(/\D/g, ''); // Remove non-digit characters
   let formattedValue = '';
 
-  if (locale.value === 'en-US') {
-    if (cleanedValue.length > 0) formattedValue += cleanedValue.substring(0, 2);
-    if (cleanedValue.length > 2) formattedValue += '/' + cleanedValue.substring(2, 4);
-    if (cleanedValue.length > 4) formattedValue += '/' + cleanedValue.substring(4, 8);
-  } else {
-    if (cleanedValue.length > 0) formattedValue += cleanedValue.substring(0, 2);
-    if (cleanedValue.length > 2) formattedValue += '/' + cleanedValue.substring(2, 4);
-    if (cleanedValue.length > 4) formattedValue += '/' + cleanedValue.substring(4, 8);
-  }
+  if (cleanedValue.length > 0) formattedValue += cleanedValue.substring(0, 2);
+  if (cleanedValue.length > 2) formattedValue += '/' + cleanedValue.substring(2, 4);
+  if (cleanedValue.length > 4) formattedValue += '/' + cleanedValue.substring(4, 8);
 
   dateInput.value = formattedValue;
   if (validateDate(formattedValue)) {
-    emit('update:modelValue', formattedValue);
+    emit('update:modelValue', dayjs(formattedValue, dateFormat.value).format('YYYY-MM-DD'));
+  } else if (formattedValue.length < 10) {
+    emit('update:modelValue', '')
   }
 };
-
-watch(() => props.modelValue, (newVal) => {
-  dateInput.value = newVal;
-  validateDate(newVal);
-});
 
 onMounted(() => {
   locale.value = navigator.language;
@@ -70,6 +61,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 1em;
 }
 
 .input-label {

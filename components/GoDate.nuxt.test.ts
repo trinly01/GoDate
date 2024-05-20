@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import DateInput from '~/components/GoDate.vue'
+import GoDate from '~/components/GoDate.vue'
 
-describe('DateInput Component', () => {
+describe('GoDate Component', () => {
   it('renders correctly with initial modelValue', async () => {
-    const wrapper = mount(DateInput, {
+    const wrapper = mount(GoDate, {
       props: {
         modelValue: '01/01/2020',
       },
@@ -15,7 +15,7 @@ describe('DateInput Component', () => {
   })
 
   it('updates the modelValue when input changes', async () => {
-    const wrapper = mount(DateInput, {
+    const wrapper = mount(GoDate, {
       props: {
         modelValue: '01/01/2020',
       },
@@ -28,7 +28,7 @@ describe('DateInput Component', () => {
   })
 
   it('shows an error message for an invalid date', async () => {
-    const wrapper = mount(DateInput, {
+    const wrapper = mount(GoDate, {
       props: {
         modelValue: '',
       },

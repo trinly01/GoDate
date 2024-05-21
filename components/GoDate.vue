@@ -23,7 +23,6 @@ const props = defineProps<Props>();
 const emit = defineEmits(['update:modelValue']);
 
 const locale = useNuxtApp().$i18n.getBrowserLocale();
-console.log(locale)
 const dateInput = ref<string>(props.modelValue);
 const errorMsg = ref<string>('');
 

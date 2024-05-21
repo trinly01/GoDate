@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import dayjs from 'dayjs';
 
 type Props = {
@@ -22,11 +22,12 @@ type Props = {
 const props = defineProps<Props>();
 const emit = defineEmits(['update:modelValue']);
 
-const locale = ref<string>('en-US');
+const locale = useI18n().getBrowserLocale();
+console.log(locale)
 const dateInput = ref<string>(props.modelValue);
 const errorMsg = ref<string>('');
 
-const dateFormat = computed(() => locale.value === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY');
+const dateFormat = computed(() => locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY');
 
 const validateDate = (date: string): boolean => {
   const isValid = dayjs(date, dateFormat.value).format(dateFormat.value) === date;
@@ -51,9 +52,6 @@ const onInput = (event: Event): void => {
   }
 };
 
-onMounted(() => {
-  locale.value = navigator.language;
-});
 </script>
 
 <style scoped>

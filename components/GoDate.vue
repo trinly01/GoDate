@@ -13,6 +13,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 type Props = {
   modelValue: string
@@ -29,7 +31,9 @@ const errorMsg = ref<string>('');
 const dateFormat = computed(() => locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY');
 
 const validateDate = (date: string): boolean => {
-  const isValid = dayjs(date, dateFormat.value).format(dateFormat.value) === date;
+  const format = dateFormat.value
+  console.log(date, format, dayjs(date, format, true))
+  const isValid = dayjs(date, format, true).format(format) === date;
   errorMsg.value = isValid ? '' : 'Invalid Date';
   return isValid;
 };

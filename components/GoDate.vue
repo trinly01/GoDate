@@ -32,7 +32,6 @@ const dateFormat = computed(() => locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYY
 
 const validateDate = (date: string): boolean => {
   const format = dateFormat.value
-  console.log(date, format, dayjs(date, format, true))
   const isValid = dayjs(date, format, true).format(format) === date;
   errorMsg.value = isValid ? '' : 'Invalid Date';
   return isValid;
